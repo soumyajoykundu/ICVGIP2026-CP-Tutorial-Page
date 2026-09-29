@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Uncertainty Quantification via Conformal Prediction | ICVGIP 2026
+    </title>
+
+    <meta
+        name="description"
+        content="ICVGIP 2026 Tutorial — Uncertainty Quantification via Conformal Prediction"
+    >
+
+    <meta
+        name="author"
+        content="Tanujit Chakraborty, Soumyajoy Kundu, Swarnadeep Datta"
+    >
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <header class="hero">
+
+        <div class="hero-inner">
+
+
+            <div class="conference-label">
+                ICVGIP 2026 TUTORIAL
+            </div>
+
+
+            <h1>
+
+                Uncertainty Quantification
+
+                <span>
+                    via Conformal Prediction
+                </span>
+
+            </h1>
+
+
+            <p class="subtitle">
+
+                Distribution-Free Uncertainty Quantification
+                for Modern AI
+
+            </p>
+
+
+            <!-- =================================================
+                 SLIDES
+            ================================================== -->
+
+            <div class="hero-links">
+
+                <a
+                    class="hero-link"
+                    href="slides.pdf"
+                    target="_blank"
+                    rel="noopener"
+                >
+
+                    <span class="slides-document-icon">
+                        <span class="slides-fold"></span>
+                        <span class="slides-letter">P</span>
+                    </span>
+
+                    <span>
+                        [All Slides]
+                    </span>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+
+        <!-- =====================================================
+             EVENT INFORMATION
+        ====================================================== -->
+
+        <section class="event-section">
+
+            <div class="event-grid">
+
+
+                <!-- DATE -->
+
+                <div class="event-card">
+
+                    <div class="event-icon">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <div class="event-label">
+                            DATE
+                        </div>
+
+                        <div class="event-value">
+                            December 21, 2026
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DURATION -->
+
+                <div class="event-card">
+
+                    <div class="event-icon">
+                        3h
+                    </div>
+
+                    <div>
+
+                        <div class="event-label">
+                            DURATION
+                        </div>
+
+                        <div class="event-value">
+                            3 Hours
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VENUE -->
+
+                <div class="event-card">
+
+                    <div class="event-icon">
+                        ⌖
+                    </div>
+
+                    <div>
+
+                        <div class="event-label">
+                            VENUE
+                        </div>
+
+                        <div class="event-value">
+
+                            IIT Kharagpur Research Park
+
+                            <br>
+
+                            Kolkata, India
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ABSTRACT
+        ====================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <div>
+
+                    <div class="section-label">
+                        TUTORIAL OVERVIEW
+                    </div>
+
+                    <h2>
+                        Abstract
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="abstract-card">
+
+
+                <p>
+
+                    Modern computer vision and machine learning systems are
+                    routinely deployed in high-stakes settings such as medical
+                    image diagnosis, autonomous perception, and remote sensing,
+                    where a single point prediction offers no guarantee about
+                    how much to trust it. Standard remedies like Bayesian
+                    posteriors, bootstrap intervals, softmax confidence scores,
+                    and quantile regression either rely on strong distributional
+                    assumptions, require expensive re-sampling, or provide no
+                    rigorous coverage guarantee at all. Conformal Prediction (CP) 
+                    closes this gap: it is a model-agnostic,
+                    distribution-free framework that wraps around any
+                    pre-trained predictor and converts its point predictions
+                    into prediction sets or intervals that provably contain
+                    the true outcome with a user-specified probability, in
+                    finite samples, with no assumptions on the underlying
+                    data-generating distribution.
+
+                </p>
+
+
+                <p>
+
+                    This tutorial gives a self-contained introduction to
+                    conformal prediction and a curated tour of selected
+                    recent topics of interest to the ICVGIP audience:
+                    conformalized image classification with adaptive
+                    prediction sets, conformal prediction under distribution
+                    shift, and conformal uncertainty quantification for
+                    sequential and dependent data. The session closes with
+                    a hands-on implementation block so that participants
+                    leave able to conformalize their own models.
+
+                </p>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             AGENDA
+        ====================================================== -->
+
+        <section class="agenda-section">
+
+
+            <div class="agenda-container">
+
+
+                <div class="agenda-title">
+
+
+                    <div class="section-number agenda-number">
+                        02
+                    </div>
+
+
+                    <div>
+
+                        <div class="section-label">
+                            TUTORIAL OUTLINE
+                        </div>
+
+                        <h2>
+                            Agenda
+                        </h2>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="agenda-card">
+
+
+                    <!-- PART I -->
+
+                    <div class="agenda-item">
+
+
+                        <div class="agenda-marker">
+                            I
+                        </div>
+
+
+                        <div class="agenda-content">
+
+
+                            <div class="agenda-heading">
+
+                                <h3>
+
+                                    Uncertainty Quantification
+                                    &amp; the Foundations of
+                                    Conformal Prediction
+
+                                </h3>
+
+
+                                <span class="agenda-time">
+                                    60 min
+                                </span>
+
+                            </div>
+
+
+                            <p>
+
+                                Motivation for uncertainty quantification
+                                in modern AI; overview of existing
+                                approaches and their limitations;
+                                challenges in obtaining reliable
+                                distribution-free guarantees; and an
+                                intuitive introduction to Conformal
+                                Prediction.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- PART II -->
+
+                    <div class="agenda-item">
+
+
+                        <div class="agenda-marker">
+                            II
+                        </div>
+
+
+                        <div class="agenda-content">
+
+
+                            <div class="agenda-heading">
+
+                                <h3>
+
+                                    Conformal Prediction —
+                                    Theory, Applications
+                                    &amp; Advances
+
+                                </h3>
+
+
+                                <span class="agenda-time">
+                                    60 min
+                                </span>
+
+                            </div>
+
+
+                            <p>
+
+                                Fundamental principles and theoretical
+                                guarantees; practical construction of
+                                conformal methods; applications to
+                                predictive tasks; recent developments;
+                                and practical considerations,
+                                limitations, and open research directions.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- PART III -->
+
+                    <div class="agenda-item">
+
+
+                        <div class="agenda-marker">
+                            III
+                        </div>
+
+
+                        <div class="agenda-content">
+
+
+                            <div class="agenda-heading">
+
+                                <h3>
+                                    Hands-on Implementation
+                                </h3>
+
+
+                                <span class="agenda-time">
+                                    60 min
+                                </span>
+
+                            </div>
+
+
+                            <p>
+
+                                Practical implementation of Conformal
+                                Prediction for representative prediction
+                                tasks; conformalization of pre-trained
+                                machine-learning and computer-vision
+                                models; and end-to-end workflows for
+                                calibration, uncertainty quantification,
+                                and evaluation.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SPEAKERS
+        ====================================================== -->
+
+        <section class="content-section speakers-section">
+
+
+            <div class="section-heading">
+
+
+                <div class="section-number">
+                    03
+                </div>
+
+
+                <div>
+
+                    <div class="section-label">
+                        TUTORIAL SPEAKERS
+                    </div>
+
+                    <h2>
+                        Speakers
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="speaker-grid">
+              <!-- =================================================
+                SPEAKER 1
+              ================================================== -->
+
+            <article class="speaker-card">
+
+                <div class="speaker-photo">
+
+                    <img
+                        src="assets/tanujit_chakraborty.png"
+                        alt="Dr. Tanujit Chakraborty"
+                    >
+
+                </div>
+
+
+                <div class="speaker-info">
+
+                    <div class="speaker-main">
+
+                        <h3>
+                            Dr. Tanujit Chakraborty
+                        </h3>
+
+
+                        <div class="speaker-role">
+                            Associate Professor
+                        </div>
+
+
+                        <div class="speaker-affiliation">
+
+                            Sorbonne University Abu Dhabi, UAE<br>
+                            Sorbonne Center for Artificial Intelligence, Paris
+
+                        </div>
+
+
+                        <p class="speaker-bio">
+
+                            Dr. Tanujit Chakraborty is an Associate Professor of
+                            Statistics and Data Science at Sorbonne University Abu Dhabi
+                            and the Sorbonne Center for Artificial Intelligence, Paris.
+                            He received his Ph.D. in Statistics from the Indian
+                            Statistical Institute, Kolkata, and works on statistical
+                            machine learning, time-series forecasting, econometrics,
+                            health data science, and distribution-free uncertainty
+                            quantification. He is the founder and Principal Investigator
+                            of the ForeML Lab.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="speaker-link-row">
+
+                        <a
+                            class="profile-link"
+                            href="https://www.ctanujit.org/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Personal Website ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                SPEAKER 2
+            ================================================== -->
+
+            <article class="speaker-card">
+
+                <div class="speaker-photo">
+
+                    <img
+                        src="assets/soumyajoy_kundu.png"
+                        alt="Soumyajoy Kundu"
+                    >
+
+                </div>
+
+
+                <div class="speaker-info">
+
+                    <div class="speaker-main">
+
+                        <h3>
+                            Soumyajoy Kundu
+                        </h3>
+
+
+                        <div class="speaker-role">
+                            Junior Research Fellow
+                        </div>
+
+
+                        <div class="speaker-affiliation">
+
+                            Indian Institute of Science ·
+                            Bengaluru, India
+
+                        </div>
+
+
+                        <p class="speaker-bio">
+
+                            Soumyajoy Kundu is a Ph.D. student in Brain, Computation,
+                            and Data Science at the Indian Institute of Science,
+                            Bengaluru. He holds a B.Sc. in Statistics from the
+                            University of Calcutta and an M.Sc. in Data Science from
+                            the Chennai Mathematical Institute. His research spans
+                            computer vision, statistical machine learning, graph-based
+                            learning, and time-series forecasting, with a focus on
+                            reliable and data-driven AI systems. He is also a member
+                            of the ForeML Lab.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="speaker-link-row">
+
+                        <a
+                            class="profile-link"
+                            href="https://soumyajoykundu.github.io/sk-portfolio/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Personal Website ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                SPEAKER 3
+            ================================================== -->
+
+            <article class="speaker-card">
+
+                <div class="speaker-photo">
+
+                    <img
+                        src="assets/swarnadeep_datta.jpeg"
+                        alt="Swarnadeep Datta"
+                    >
+
+                </div>
+
+
+                <div class="speaker-info">
+
+                    <div class="speaker-main">
+
+                        <h3>
+                            Swarnadeep Datta
+                        </h3>
+
+
+                        <div class="speaker-role">
+                            Junior Research Fellow
+                        </div>
+
+
+                        <div class="speaker-affiliation">
+
+                            Indian Statistical Institute ·
+                            Kolkata, India
+
+                        </div>
+
+
+                        <p class="speaker-bio">
+
+                            Swarnadeep Datta is a Ph.D. student in Statistics at the
+                            Indian Statistical Institute, Kolkata, affiliated with the
+                            Interdisciplinary Statistical Research Unit. He holds a
+                            Bachelor’s degree in Statistics from the University of
+                            Calcutta and a Master of Statistics from ISI. His research
+                            interests include multiple hypothesis testing, asymptotic
+                            theory of inference, high-dimensional statistics, and
+                            conformal prediction.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="speaker-link-row">
+
+                        <a
+                            class="profile-link"
+                            href="https://orcid.org/0009-0008-2720-4624"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            ORCID ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONFERENCE CTA
+        ====================================================== -->
+
+        <section class="conference-cta">
+
+
+            <div class="conference-cta-inner">
+
+
+                <h2>
+                    Check Details &amp; Join Us
+                </h2>
+
+
+                <p>
+
+                    Join us at ICVGIP 2026 for an in-depth tutorial on
+                    uncertainty quantification and conformal prediction.
+
+                </p>
+
+
+                <a
+                    class="conference-button"
+                    href="https://icvgip.in/2026/"
+                    target="_blank"
+                    rel="noopener"
+                >
+
+                    ICVGIP 2026 Website
+
+                    <span>
+                        ↗
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+
+        <div class="footer-inner">
+
+            <p>
+                © 2026 ICVGIP Tutorial · Uncertainty Quantification via Conformal Prediction
+            </p>
+
+        </div>
+
+
+    </footer>
+
+
+</body>
+
+</html>
